@@ -47,7 +47,7 @@ const DealRow = ({ cheapSharkUrl = 'https://www.cheapshark.com/api/1.0/deals?sto
             </div>
           </div>
         ))}
-      <div className={styles.card}>
+      <div className={`${styles.card} ${styles.moreCard}`}>
         <a href='/' className={styles.moreA}></a>
         <div className={styles.moreDiv}>
           <h4>Browse All Deals</h4>
