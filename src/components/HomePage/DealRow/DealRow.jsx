@@ -7,6 +7,7 @@ const DealRow = ({ cheapSharkUrl = 'https://www.cheapshark.com/api/1.0/deals?sto
   useEffect(() => {
     axios.get(cheapSharkUrl).then(response => {
       setRecentDeals(response.data)
+      console.log(response.data)
     })
   }, [])
   return (
@@ -14,25 +15,35 @@ const DealRow = ({ cheapSharkUrl = 'https://www.cheapshark.com/api/1.0/deals?sto
       {recentDeals &&
         recentDeals.map((deal, index) => (
           <div className={styles.card} key={index}>
-            <h4>{deal.title}</h4>
-            <img src={deal.thumb} alt='a game img' />
-            <div className={styles.stickers}>
-              <div className={styles.discount}>
-                <p>Savings: {Math.round(deal.savings)}%</p>
-              </div>
-              <div className={styles.rating}>
-                <p>Rating: {deal.dealRating}</p>
-              </div>
+            <div className={styles.leftSide}>
+              <img
+                className={styles.headerImage}
+                src={`https://cdn.akamai.steamstatic.com/steam/apps/${deal.steamAppID}/header.jpg`}
+                alt='a game img'
+              />
             </div>
-            <div className={styles.stickers}>
-              <div className={styles.discount}>
-                <p>Prev: ${deal.normalPrice}</p>
+            <div className={styles.rightSide}>
+              <h4>{deal.title}</h4>
+              <div className={styles.stickers}>
+                <div className={styles.discount}>
+                  <p>Savings: {Math.round(deal.savings)}%</p>
+                </div>
+                <div className={styles.rating}>
+                  <p>Rating: {deal.dealRating}</p>
+                </div>
               </div>
-              <div className={styles.rating}>
-                <p>New: ${deal.salePrice}</p>
+              <div className={styles.stickers}>
+                <div className={styles.discount}>
+                  <p>Prev: ${deal.normalPrice}</p>
+                </div>
+                <div className={styles.rating}>
+                  <p>New: ${deal.salePrice}</p>
+                </div>
               </div>
+              <Button href={`https://www.cheapshark.com/redirect?dealID=${deal.dealID}`} target='_blank' appearance='primary'>
+                Deal
+              </Button>
             </div>
-            <Button href={`https://www.cheapshark.com/redirect?dealID=${deal.dealID}`}>Deal</Button>
           </div>
         ))}
     </div>

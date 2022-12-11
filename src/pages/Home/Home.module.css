@@ -1,19 +1,7 @@
-.card {
-  background-color: rgb(255, 208, 164);
-  width: 300px;
-  border: 10px;
+.container {
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  text-align: center;
 }
 
-.dealRow {
-  display: flex;
-  gap: 10px;
-}
-
-.stickers {
-  display: flex;
-  justify-content: space-between;
+.nav {
+  height: 100%;
 }

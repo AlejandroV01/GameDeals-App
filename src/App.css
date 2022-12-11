@@ -2,3 +2,13 @@
   margin: 0;
   box-sizing: border-box;
 }
+body {
+  background-color: #23222f;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  color: white;
+}
