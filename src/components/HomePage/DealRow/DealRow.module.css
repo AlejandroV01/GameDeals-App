@@ -7,7 +7,9 @@
   text-align: center;
   color: white;
   min-width: 300px;
+  max-width: 300px;
   min-height: 280px;
+  position: relative;
 }
 .dealRow {
   display: flex;
@@ -24,4 +26,32 @@
   width: auto;
   height: auto;
   border-radius: 5px;
+}
+
+.gameHeader {
+  display: -webkit-box;
+  width: 100;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.moreDiv {
+  min-width: 300px;
+  max-width: 300px;
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.moreA {
+  position: absolute;
+  text-decoration: none;
+  color: white;
+  min-width: 300px;
+  max-width: 300px;
+  min-height: 280px;
 }

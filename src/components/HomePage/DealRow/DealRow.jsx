@@ -1,3 +1,4 @@
+import MoreIcon from '@rsuite/icons/More'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Button } from 'rsuite'
@@ -23,7 +24,7 @@ const DealRow = ({ cheapSharkUrl = 'https://www.cheapshark.com/api/1.0/deals?sto
               />
             </div>
             <div className={styles.rightSide}>
-              <h4>{deal.title}</h4>
+              <h4 className={styles.gameHeader}>{deal.title}</h4>
               <div className={styles.stickers}>
                 <div className={styles.discount}>
                   <p>Savings: {Math.round(deal.savings)}%</p>
@@ -46,6 +47,13 @@ const DealRow = ({ cheapSharkUrl = 'https://www.cheapshark.com/api/1.0/deals?sto
             </div>
           </div>
         ))}
+      <div className={styles.card}>
+        <a href='/' className={styles.moreA}></a>
+        <div className={styles.moreDiv}>
+          <h4>Browse All Deals</h4>
+          <MoreIcon style={{ fontSize: '5em' }}></MoreIcon>
+        </div>
+      </div>
     </div>
   )
 }

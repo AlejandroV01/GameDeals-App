@@ -4,12 +4,11 @@ import GroupIcon from '@rsuite/icons/legacy/Group'
 import MagicIcon from '@rsuite/icons/legacy/Magic'
 import React from 'react'
 import { Nav, Sidenav } from 'rsuite'
-import styles from '../../pages/Home/Home.module.css'
 
 const SideNav = () => {
   return (
     <div style={{ width: 240 }}>
-      <Sidenav defaultOpenKeys={['3', '4']} className={styles.nav} appearance='subtle'>
+      <Sidenav defaultOpenKeys={['3', '4']} appearance='subtle'>
         <Sidenav.Body>
           <Nav activeKey='1'>
             <Nav.Item eventKey='1' icon={<DashboardIcon />}>
