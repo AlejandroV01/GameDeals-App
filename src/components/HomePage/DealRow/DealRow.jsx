@@ -1,21 +1,25 @@
 import MoreIcon from '@rsuite/icons/More'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { Button } from 'rsuite'
+import { Divider, Stack } from 'rsuite'
 import styles from './DealRow.module.css'
 const DealRow = ({ cheapSharkUrl = 'https://www.cheapshark.com/api/1.0/deals?storeID=1&upperPrice=15&pageSize=10&sortBy=recent' }) => {
-  const [recentDeals, setRecentDeals] = useState(null)
+  const [allDeals, setAllDeals] = useState(null)
+
   useEffect(() => {
     axios.get(cheapSharkUrl).then(response => {
-      setRecentDeals(response.data)
-      console.log(response.data)
+      setAllDeals(response.data)
     })
   }, [])
+  console.log(allDeals)
   return (
     <div className={styles.dealRow}>
-      {recentDeals &&
-        recentDeals.map((deal, index) => (
+      {allDeals &&
+        allDeals.map((deal, index) => (
           <div className={styles.card} key={index}>
+            <a target='_blank' rel='noreferrer' href={`https://www.cheapshark.com/redirect?dealID=${deal.dealID}`} className={styles.moreA}>
+              {}
+            </a>
             <div className={styles.leftSide}>
               <img
                 className={styles.headerImage}
@@ -25,30 +29,24 @@ const DealRow = ({ cheapSharkUrl = 'https://www.cheapshark.com/api/1.0/deals?sto
             </div>
             <div className={styles.rightSide}>
               <h4 className={styles.gameHeader}>{deal.title}</h4>
-              <div className={styles.stickers}>
-                <div className={styles.discount}>
-                  <p>Savings: {Math.round(deal.savings)}%</p>
+              <Stack divider={<Divider vertical />}>
+                <div className={styles.dealText}>
+                  <span>{Math.round(deal.savings)}% Off </span>
                 </div>
-                <div className={styles.rating}>
-                  <p>Rating: {deal.dealRating}</p>
+                <div>
+                  <img className={styles.storeLogo} src={`https://www.cheapshark.com/img/stores/logos/${deal.storeID - 1}.png`} alt='' />
                 </div>
-              </div>
-              <div className={styles.stickers}>
-                <div className={styles.discount}>
-                  <p>Prev: ${deal.normalPrice}</p>
+                <div className={`${deal.savings > 65 ? styles.goodDeal : styles.normalDeal} ${styles.dealText}`}>
+                  <span>${deal.salePrice}</span>
                 </div>
-                <div className={styles.rating}>
-                  <p>New: ${deal.salePrice}</p>
-                </div>
-              </div>
-              <Button href={`https://www.cheapshark.com/redirect?dealID=${deal.dealID}`} target='_blank' appearance='primary'>
-                Deal
-              </Button>
+              </Stack>
             </div>
           </div>
         ))}
       <div className={`${styles.card} ${styles.moreCard}`}>
-        <a href='/' className={styles.moreA}></a>
+        <a href='/' className={styles.moreA}>
+          {}
+        </a>
         <div className={styles.moreDiv}>
           <h4>Browse All Deals</h4>
           <MoreIcon style={{ fontSize: '5em' }}></MoreIcon>

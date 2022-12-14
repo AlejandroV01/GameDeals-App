@@ -8,7 +8,7 @@
   color: white;
   min-width: 300px;
   max-width: 300px;
-  min-height: 280px;
+  min-height: 240px;
   position: relative;
 }
 .dealRow {
@@ -28,6 +28,11 @@
   border-radius: 5px;
 }
 
+.rightSide {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .gameHeader {
   display: -webkit-box;
   width: 100;
@@ -61,4 +66,28 @@
 .moreCard:hover {
   background-color: #49455e;
   transition: 0.75s ease-out;
+}
+.card:hover {
+  background-color: #49455e;
+  transition: 0.75s ease-out;
+}
+
+.discount {
+  font-size: 1.2rem;
+}
+
+.progress {
+  width: 50px;
+  color: white;
+  display: 'inline-block';
+}
+
+.storeLogo {
+  width: 40px;
+}
+.dealText {
+  font-size: 1.4rem;
+}
+.goodDeal {
+  color: #07da74;
 }
