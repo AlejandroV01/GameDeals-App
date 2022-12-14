@@ -12,10 +12,10 @@ const SideNav = () => {
         <Sidenav.Body>
           <Nav activeKey='1'>
             <Nav.Item eventKey='1' icon={<DashboardIcon />}>
-              Dashboard
+              Home
             </Nav.Item>
             <Nav.Item eventKey='2' icon={<GroupIcon />}>
-              User Group
+              Search
             </Nav.Item>
             <Nav.Menu eventKey='3' title='Advanced' icon={<MagicIcon />}>
               <Nav.Item eventKey='3-1'>Geo</Nav.Item>

@@ -10,14 +10,11 @@ const Home = () => {
       <SideNav></SideNav>
       <div>
         <h3>New Deals</h3>
-        <DealRow cheapSharkUrl='https://www.cheapshark.com/api/1.0/deals?pageSize=5&metacritic=60&steamRating=75&sortBy=recent'></DealRow>
+        <DealRow cheapSharkUrl='https://www.cheapshark.com/api/1.0/deals?pageSize=5&metacritic=60&steamRating=70&sortBy=recent'></DealRow>
         <h3>Best Deals</h3>
-        <DealRow cheapSharkUrl='https://www.cheapshark.com/api/1.0/deals?pageSize=5&metacritic=60&steamRating=75&sortBy=Savings'></DealRow>
+        <DealRow cheapSharkUrl='https://www.cheapshark.com/api/1.0/deals?pageSize=5&metacritic=60&steamRating=70&sortBy=Savings'></DealRow>
         <h3>Popular Deals</h3>
-        <DealRow
-          popularSort={true}
-          cheapSharkUrl='https://www.cheapshark.com/api/1.0/deals?pageSize=10&metacritic=75&steamRating=80&AAA=true'
-        ></DealRow>
+        <DealRow popularSort={true} cheapSharkUrl='https://www.cheapshark.com/api/1.0/deals?pageSize=10&metacritic=60&steamRating=70'></DealRow>
       </div>
     </div>
   )
