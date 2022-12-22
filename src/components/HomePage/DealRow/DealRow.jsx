@@ -3,21 +3,33 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Divider, Stack } from 'rsuite'
 import styles from './DealRow.module.css'
-const DealRow = ({ cheapSharkUrl, popularSort = false }) => {
+const DealRow = ({ cheapSharkUrl }) => {
   const [allDeals, setAllDeals] = useState(null)
 
-  let newArr = []
   useEffect(() => {
     axios.get(cheapSharkUrl).then(response => {
       setAllDeals(response.data)
-      if (popularSort) {
-        for (let i = 0; i < response.data.length; i++) {
-          if (parseInt(response.data[i].normalPrice) >= 30 && newArr.length < 5) {
+      let newArr = []
+
+      for (let i = 0; i < response.data.length; i++) {
+        let isDup = false
+        if (newArr.length > 0) {
+          for (let j = 0; j < newArr.length; j++) {
+            if (response.data[i].internalName === newArr[j].internalName) {
+              isDup = true
+              break
+            }
+          }
+          if (isDup === false) {
             newArr.push(response.data[i])
           }
+        } else {
+          newArr.push(response.data[i])
         }
-        setAllDeals(newArr)
       }
+      newArr = newArr.splice(0, 5)
+
+      setAllDeals(newArr)
     })
   }, [])
 

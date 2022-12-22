@@ -6,8 +6,8 @@
   padding: 10px;
   text-align: center;
   color: white;
-  min-width: 300px;
-  max-width: 300px;
+  min-width: 265px;
+  max-width: 265px;
   min-height: 240px;
   position: relative;
 }
@@ -71,7 +71,9 @@
   background-color: #49455e;
   transition: 0.75s ease-out;
 }
-
+.card {
+  transition: background 0.75s ease-out;
+}
 .discount {
   font-size: 1.2rem;
 }
