@@ -56,7 +56,6 @@ const filterBar = () => {
       <InputPicker data={discountData} style={{ width: 175 }} placeholder='Discount' />
       <TagPicker data={storeData} style={{ width: 175 }} placeholder='Stores' />
       <InputPicker data={reviewData} style={{ width: 175 }} placeholder='Discount' />
-
       <Button appearance='primary'>Search</Button>
     </Stack>
   )
