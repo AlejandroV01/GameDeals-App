@@ -1,3 +1,25 @@
 .container {
   display: flex;
 }
+
+.whiteText {
+  color: white;
+}
+.dealParent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: fit-content;
+}
+
+.mainStack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dealAndSortDiv {
+  display: flex;
+  justify-content: space-between;
+}

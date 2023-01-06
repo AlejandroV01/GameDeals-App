@@ -1,7 +1,7 @@
 import SearchIcon from '@rsuite/icons/Search'
 import React from 'react'
 import { Button, Divider, Input, InputGroup, InputPicker, Stack, TagPicker } from 'rsuite'
-
+import styles from './FilterBar.module.css'
 const priceData = ['Under $2', 'Under $5', 'Under $10', 'Under $15', 'Under $20', 'Under $30', 'Above $30'].map((item, index) => ({
   label: item,
   value: index,
@@ -56,7 +56,8 @@ const filterBar = () => {
       <InputPicker data={discountData} style={{ width: 175 }} placeholder='Discount' />
       <TagPicker data={storeData} style={{ width: 175 }} placeholder='Stores' />
       <InputPicker data={reviewData} style={{ width: 175 }} placeholder='Discount' />
-      <Button>Search</Button>
+
+      <Button appearance='primary'>Search</Button>
     </Stack>
   )
 }

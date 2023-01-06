@@ -9,6 +9,7 @@
   min-width: 265px;
   max-width: 265px;
   min-height: 240px;
+  max-height: 240px;
   position: relative;
 }
 .dealRow {
@@ -27,11 +28,16 @@
   height: auto;
   border-radius: 5px;
 }
-
+.leftSide {
+  width: 100%;
+  height: 50%;
+}
 .rightSide {
+  height: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 .gameHeader {
   display: -webkit-box;

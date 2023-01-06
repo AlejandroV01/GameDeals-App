@@ -1,6 +1,7 @@
 import MoreIcon from '@rsuite/icons/More'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Divider, Stack } from 'rsuite'
 import styles from './DealRow.module.css'
 const DealRow = ({ cheapSharkUrl }) => {
@@ -30,6 +31,7 @@ const DealRow = ({ cheapSharkUrl }) => {
       newArr = newArr.splice(0, 5)
 
       setAllDeals(newArr)
+      console.log(allDeals)
     })
   }, [])
 
@@ -44,7 +46,7 @@ const DealRow = ({ cheapSharkUrl }) => {
             <div className={styles.leftSide}>
               <img
                 className={styles.headerImage}
-                src={`https://cdn.akamai.steamstatic.com/steam/apps/${deal.steamAppID}/header.jpg`}
+                src={deal.steamAppID ? `https://cdn.akamai.steamstatic.com/steam/apps/${deal.steamAppID}/header.jpg` : `${deal.thumb}`}
                 alt='a game img'
               />
             </div>
@@ -58,16 +60,14 @@ const DealRow = ({ cheapSharkUrl }) => {
                   <img className={styles.storeLogo} src={`https://www.cheapshark.com/img/stores/logos/${deal.storeID - 1}.png`} alt='' />
                 </div>
                 <div className={`${deal.savings > 65 ? styles.goodDeal : styles.normalDeal} ${styles.dealText}`}>
-                  <span>${deal.salePrice}</span>
+                  {deal.salePrice > 0 ? <span>${deal.salePrice}</span> : <span>FREE</span>}
                 </div>
               </Stack>
             </div>
           </div>
         ))}
       <div className={`${styles.card} ${styles.moreCard}`}>
-        <a href='/' className={styles.moreA}>
-          {}
-        </a>
+        <Link to='/search' className={styles.moreA}></Link>
         <div className={styles.moreDiv}>
           <h4>Browse All Deals</h4>
           <MoreIcon style={{ fontSize: '5em' }}></MoreIcon>
