@@ -1,3 +1,4 @@
+import axios from 'axios'
 import TooltipSlider from 'rc-slider'
 import 'rc-slider/assets/index.css'
 import React, { useState } from 'react'
@@ -6,20 +7,47 @@ import SideNav from '../../components/SideNav/SideNav'
 import FilterBar from './components/FilterBar'
 import FilteredDeals from './components/FilteredDeals'
 import styles from './Search.module.css'
-const Search = ({ price, discount, time, store, reviews, title, dealRating }) => {
+const Search = () => {
   const [sortTitle, setSortTitle] = useState('Lowest Price')
 
   const handleSelect = newVal => {
     setSortTitle(newVal)
   }
+  const [allDeals, setAllDeals] = useState(null)
 
+  const handleSearch = ({ lowerPrice }) => {
+    console.log(lowerPrice)
+    axios.get(`https://www.cheapshark.com/api/1.0/deals?metacritic=60&steamRating=70&sortBy=recent&lowerPrice=${lowerPrice}`).then(response => {
+      setAllDeals(response.data)
+      let newArr = []
+
+      for (let i = 0; i < response.data.length; i++) {
+        let isDup = false
+        if (newArr.length > 0) {
+          for (let j = 0; j < newArr.length; j++) {
+            if (response.data[i].internalName === newArr[j].internalName) {
+              isDup = true
+              break
+            }
+          }
+          if (isDup === false) {
+            newArr.push(response.data[i])
+          }
+        } else {
+          newArr.push(response.data[i])
+        }
+      }
+      setAllDeals(newArr)
+      console.log(newArr)
+    })
+  }
   return (
     <div className={styles.container}>
       <SideNav></SideNav>
       <div className={styles.mainStack}>
         <h1>Search game deals</h1>
         <hr />
-        <FilterBar />
+        <FilterBar handleSearch={() => handleSearch()} />
         <hr />
         <div className={styles.dealAndSortDiv}>
           <div className={styles.dealParent}>
