@@ -7,7 +7,7 @@ import SideNav from '../../components/SideNav/SideNav'
 import FilterBar from './components/FilterBar'
 import FilteredDeals from './components/FilteredDeals'
 import styles from './Search.module.css'
-const Search = () => {
+const Search = ({ title, lowerPrice, discount, stores, review }) => {
   const [sortTitle, setSortTitle] = useState('Lowest Price')
 
   const handleSelect = newVal => {
@@ -15,31 +15,31 @@ const Search = () => {
   }
   const [allDeals, setAllDeals] = useState(null)
 
-  const handleSearch = val => {
-    console.log(val)
-    axios.get(`https://www.cheapshark.com/api/1.0/deals?metacritic=60&steamRating=70&sortBy=recent&lowerPrice=${val}`).then(response => {
-      setAllDeals(response.data)
-      let newArr = []
+  const handleSearch = () => {
+    console.log(lowerPrice)
+    // axios.get(`https://www.cheapshark.com/api/1.0/deals?metacritic=60&steamRating=70&sortBy=recent&lowerPrice`).then(response => {
+    //   setAllDeals(response.data)
+    //   let newArr = []
 
-      for (let i = 0; i < response.data.length; i++) {
-        let isDup = false
-        if (newArr.length > 0) {
-          for (let j = 0; j < newArr.length; j++) {
-            if (response.data[i].internalName === newArr[j].internalName) {
-              isDup = true
-              break
-            }
-          }
-          if (isDup === false) {
-            newArr.push(response.data[i])
-          }
-        } else {
-          newArr.push(response.data[i])
-        }
-      }
-      setAllDeals(newArr)
-      console.log(newArr)
-    })
+    //   for (let i = 0; i < response.data.length; i++) {
+    //     let isDup = false
+    //     if (newArr.length > 0) {
+    //       for (let j = 0; j < newArr.length; j++) {
+    //         if (response.data[i].internalName === newArr[j].internalName) {
+    //           isDup = true
+    //           break
+    //         }
+    //       }
+    //       if (isDup === false) {
+    //         newArr.push(response.data[i])
+    //       }
+    //     } else {
+    //       newArr.push(response.data[i])
+    //     }
+    //   }
+    //   setAllDeals(newArr)
+    //   console.log(newArr)
+    // })
   }
   return (
     <div className={styles.container}>
@@ -47,7 +47,14 @@ const Search = () => {
       <div className={styles.mainStack}>
         <h1>Search game deals</h1>
         <hr />
-        <FilterBar handleSearch={val => handleSearch(val)} />
+        <FilterBar
+          titleVal={title}
+          lowerPriceVal={lowerPrice}
+          discountVal={discount}
+          storesVal={stores}
+          reviewVal={review}
+          handleSearch={handleSearch}
+        />
         <hr />
         <div className={styles.dealAndSortDiv}>
           <div className={styles.dealParent}>

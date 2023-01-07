@@ -44,7 +44,7 @@ const reviewData = ['At least 40%', 'At least 50%', 'At least 60%', 'At least 70
   value: index,
 }))
 
-const FilterBar = ({ handleSearch }) => {
+const FilterBar = ({ handleSearch, titleVal, lowerPriceVal, discountVal, storesVal, reviewVal }) => {
   const [title, setTitle] = useState('')
   const [lowerPrice, setLowerPrice] = useState('50')
   const [discount, setDiscount] = useState('')
@@ -80,23 +80,94 @@ const FilterBar = ({ handleSearch }) => {
         console.log('error in handlePriceChange')
     }
   }
+
+  const handleDiscountChange = value => {
+    switch (value) {
+      case null:
+        setDiscount('')
+        break
+      case 0:
+        setDiscount('50')
+        break
+      case 1:
+        setDiscount('60')
+        break
+      case 2:
+        setDiscount('75')
+        break
+      case 3:
+        setDiscount('80')
+        break
+      case 4:
+        setDiscount('90')
+        break
+      case 5:
+        setDiscount('100')
+        break
+      default:
+        console.log('error in handlePriceChange')
+    }
+  }
+
+  const handleStoreChange = value => {
+    if (value === null) {
+      setStores(null)
+    } else {
+      setStores(value)
+    }
+  }
+
+  const handleReviewChange = value => {
+    switch (value) {
+      case null:
+        setReview('')
+        break
+      case 0:
+        setReview('40')
+        break
+      case 1:
+        setReview('50')
+        break
+      case 2:
+        setReview('60')
+        break
+      case 3:
+        setReview('70')
+        break
+      case 4:
+        setReview('80')
+        break
+      case 5:
+        setReview('100')
+        break
+      default:
+        console.log('error in handlePriceChange')
+    }
+  }
+  const handleTitleChange = event => {
+    setTitle(event.target.value)
+  }
   return (
     <Stack divider={<Divider vertical />}>
-      <InputGroup size='md' style={{ width: 224 }}>
+      <InputGroup size='md' style={{ width: 224 }} value={title} onChange={handleTitleChange}>
         <Input placeholder='Search'></Input>
         <InputGroup.Button>
           <SearchIcon />
         </InputGroup.Button>
       </InputGroup>
       <InputPicker data={priceData} style={{ width: 175 }} placeholder='Price' onChange={value => handlePriceChange(value)} />
-      <InputPicker data={discountData} style={{ width: 175 }} placeholder='Discount' />
-      <TagPicker data={storeData} style={{ width: 175 }} placeholder='Stores' />
-      <InputPicker data={reviewData} style={{ width: 175 }} placeholder='Review' />
+      <InputPicker data={discountData} style={{ width: 175 }} placeholder='Discount' onChange={value => handleDiscountChange(value)} />
+      <TagPicker data={storeData} style={{ width: 175 }} placeholder='Stores' onChange={value => handleStoreChange(value)} />
+      <InputPicker data={reviewData} style={{ width: 175 }} placeholder='Review' onChange={value => handleReviewChange(value)} />
       <Button
         appearance='primary'
         onClick={() => {
-          console.log(lowerPrice)
-          handleSearch(lowerPrice)
+          titleVal = { title }
+          lowerPriceVal = { lowerPrice }
+          discountVal = { discount }
+          storesVal = { stores }
+          reviewVal = { review }
+          handleSearch()
         }}
       >
         Search
