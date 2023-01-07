@@ -15,9 +15,9 @@ const Search = () => {
   }
   const [allDeals, setAllDeals] = useState(null)
 
-  const handleSearch = ({ lowerPrice }) => {
-    console.log(lowerPrice)
-    axios.get(`https://www.cheapshark.com/api/1.0/deals?metacritic=60&steamRating=70&sortBy=recent&lowerPrice=${lowerPrice}`).then(response => {
+  const handleSearch = val => {
+    console.log(val)
+    axios.get(`https://www.cheapshark.com/api/1.0/deals?metacritic=60&steamRating=70&sortBy=recent&lowerPrice=${val}`).then(response => {
       setAllDeals(response.data)
       let newArr = []
 
@@ -47,7 +47,7 @@ const Search = () => {
       <div className={styles.mainStack}>
         <h1>Search game deals</h1>
         <hr />
-        <FilterBar handleSearch={() => handleSearch()} />
+        <FilterBar handleSearch={val => handleSearch(val)} />
         <hr />
         <div className={styles.dealAndSortDiv}>
           <div className={styles.dealParent}>

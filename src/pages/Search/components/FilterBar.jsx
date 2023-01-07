@@ -45,9 +45,11 @@ const reviewData = ['At least 40%', 'At least 50%', 'At least 60%', 'At least 70
 }))
 
 const FilterBar = ({ handleSearch }) => {
+  const [title, setTitle] = useState('')
   const [lowerPrice, setLowerPrice] = useState('50')
+  const [discount, setDiscount] = useState('')
   const [stores, setStores] = useState('')
-
+  const [review, setReview] = useState('')
   const handlePriceChange = value => {
     switch (value) {
       case null:
@@ -89,7 +91,7 @@ const FilterBar = ({ handleSearch }) => {
       <InputPicker data={priceData} style={{ width: 175 }} placeholder='Price' onChange={value => handlePriceChange(value)} />
       <InputPicker data={discountData} style={{ width: 175 }} placeholder='Discount' />
       <TagPicker data={storeData} style={{ width: 175 }} placeholder='Stores' />
-      <InputPicker data={reviewData} style={{ width: 175 }} placeholder='Discount' />
+      <InputPicker data={reviewData} style={{ width: 175 }} placeholder='Review' />
       <Button
         appearance='primary'
         onClick={() => {
