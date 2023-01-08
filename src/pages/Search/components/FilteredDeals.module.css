@@ -70,3 +70,11 @@
   top: 0;
   left: 0;
 }
+
+.goodDeal {
+  color: #07da74;
+}
+
+.normalDeal {
+  color: #ffffff;
+}

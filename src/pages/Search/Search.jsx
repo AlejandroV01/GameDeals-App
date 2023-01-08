@@ -7,7 +7,7 @@ import SideNav from '../../components/SideNav/SideNav'
 import FilterBar from './components/FilterBar'
 import FilteredDeals from './components/FilteredDeals'
 import styles from './Search.module.css'
-const Search = ({ title, lowerPrice, discount, stores, review }) => {
+const Search = () => {
   const [sortTitle, setSortTitle] = useState('Lowest Price')
 
   const handleSelect = newVal => {
@@ -15,31 +15,65 @@ const Search = ({ title, lowerPrice, discount, stores, review }) => {
   }
   const [allDeals, setAllDeals] = useState(null)
 
-  const handleSearch = () => {
-    console.log(lowerPrice)
-    // axios.get(`https://www.cheapshark.com/api/1.0/deals?metacritic=60&steamRating=70&sortBy=recent&lowerPrice`).then(response => {
-    //   setAllDeals(response.data)
-    //   let newArr = []
+  const handleSearch = ({ title, lowerPrice, discount, stores, review }) => {
+    console.log(stores)
+    let newStoreArr = []
+    if (stores !== null) {
+      for (let i = 0; i < stores.length; i++) {
+        newStoreArr.push(i + 1)
+      }
+    }
+    let storeList = newStoreArr.toString()
+    let fetchLink = `https://www.cheapshark.com/api/1.0/deals?metacritic=60&sortBy=recent`
+    console.log(stores)
+    if (lowerPrice !== null) {
+      fetchLink = fetchLink.concat(`&lowerPrice=${lowerPrice}`)
+    }
+    if (stores !== null) {
+      fetchLink = fetchLink.concat(`&storeID=${storeList}`)
+    }
+    if (review !== null) {
+      fetchLink = fetchLink.concat(`&steamRating=${review}`)
+    }
+    if (title.length > 0) {
+      fetchLink = fetchLink.concat(`&title=${title}`)
+    }
+    console.log(fetchLink)
+    axios.get(fetchLink).then(response => {
+      setAllDeals(response.data)
+      let newArr = []
 
-    //   for (let i = 0; i < response.data.length; i++) {
-    //     let isDup = false
-    //     if (newArr.length > 0) {
-    //       for (let j = 0; j < newArr.length; j++) {
-    //         if (response.data[i].internalName === newArr[j].internalName) {
-    //           isDup = true
-    //           break
-    //         }
-    //       }
-    //       if (isDup === false) {
-    //         newArr.push(response.data[i])
-    //       }
-    //     } else {
-    //       newArr.push(response.data[i])
-    //     }
-    //   }
-    //   setAllDeals(newArr)
-    //   console.log(newArr)
-    // })
+      for (let i = 0; i < response.data.length; i++) {
+        let isDup = false
+        if (newArr.length > 0) {
+          for (let j = 0; j < newArr.length; j++) {
+            if (response.data[i].internalName === newArr[j].internalName) {
+              isDup = true
+              break
+            }
+          }
+          if (isDup === false) {
+            newArr.push(response.data[i])
+          }
+        } else {
+          newArr.push(response.data[i])
+        }
+      }
+
+      if (discount !== null) {
+        let dealArr = []
+        for (let i = 0; i < allDeals.length; i++) {
+          if (allDeals[i].savings >= discount) {
+            dealArr.push(allDeals[i])
+          }
+        }
+        console.log(dealArr)
+        setAllDeals(dealArr)
+      } else {
+        console.log(newArr)
+        setAllDeals(newArr)
+      }
+    })
   }
   return (
     <div className={styles.container}>
@@ -47,14 +81,7 @@ const Search = ({ title, lowerPrice, discount, stores, review }) => {
       <div className={styles.mainStack}>
         <h1>Search game deals</h1>
         <hr />
-        <FilterBar
-          titleVal={title}
-          lowerPriceVal={lowerPrice}
-          discountVal={discount}
-          storesVal={stores}
-          reviewVal={review}
-          handleSearch={handleSearch}
-        />
+        <FilterBar handleSearch={handleSearch} />
         <hr />
         <div className={styles.dealAndSortDiv}>
           <div className={styles.dealParent}>
@@ -73,7 +100,7 @@ const Search = ({ title, lowerPrice, discount, stores, review }) => {
             </Dropdown>
           </div>
         </div>
-        <FilteredDeals></FilteredDeals>
+        <FilteredDeals allDeals={allDeals}></FilteredDeals>
       </div>
     </div>
   )

@@ -39,21 +39,21 @@ const storeData = [
   label: item,
   value: index,
 }))
-const reviewData = ['At least 40%', 'At least 50%', 'At least 60%', 'At least 70%', 'At least 80%', 'Greater than 80%'].map((item, index) => ({
+const reviewData = ['At least 40%', 'At least 50%', 'At least 60%', 'At least 70%', 'At least 80%'].map((item, index) => ({
   label: item,
   value: index,
 }))
 
-const FilterBar = ({ handleSearch, titleVal, lowerPriceVal, discountVal, storesVal, reviewVal }) => {
+const FilterBar = ({ handleSearch }) => {
   const [title, setTitle] = useState('')
-  const [lowerPrice, setLowerPrice] = useState('50')
-  const [discount, setDiscount] = useState('')
-  const [stores, setStores] = useState('')
-  const [review, setReview] = useState('')
+  const [lowerPrice, setLowerPrice] = useState(null)
+  const [discount, setDiscount] = useState(null)
+  const [stores, setStores] = useState(null)
+  const [review, setReview] = useState(null)
   const handlePriceChange = value => {
     switch (value) {
       case null:
-        setLowerPrice('50')
+        setLowerPrice(null)
         break
       case 0:
         setLowerPrice('2')
@@ -84,7 +84,7 @@ const FilterBar = ({ handleSearch, titleVal, lowerPriceVal, discountVal, storesV
   const handleDiscountChange = value => {
     switch (value) {
       case null:
-        setDiscount('')
+        setDiscount(null)
         break
       case 0:
         setDiscount('50')
@@ -100,9 +100,6 @@ const FilterBar = ({ handleSearch, titleVal, lowerPriceVal, discountVal, storesV
         break
       case 4:
         setDiscount('90')
-        break
-      case 5:
-        setDiscount('100')
         break
       default:
         console.log('error in handlePriceChange')
@@ -120,7 +117,7 @@ const FilterBar = ({ handleSearch, titleVal, lowerPriceVal, discountVal, storesV
   const handleReviewChange = value => {
     switch (value) {
       case null:
-        setReview('')
+        setReview(null)
         break
       case 0:
         setReview('40')
@@ -162,12 +159,7 @@ const FilterBar = ({ handleSearch, titleVal, lowerPriceVal, discountVal, storesV
       <Button
         appearance='primary'
         onClick={() => {
-          titleVal = { title }
-          lowerPriceVal = { lowerPrice }
-          discountVal = { discount }
-          storesVal = { stores }
-          reviewVal = { review }
-          handleSearch()
+          handleSearch({ title, lowerPrice, discount, stores, review })
         }}
       >
         Search
