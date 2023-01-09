@@ -16,9 +16,8 @@ const Search = () => {
   const [allDeals, setAllDeals] = useState(null)
 
   const handleSearch = ({ title, lowerPrice, discount, stores, review }) => {
-    console.log(stores)
     let newStoreArr = []
-    if (stores !== null) {
+    if (stores !== null || stores.length !== 0) {
       for (let i = 0; i < stores.length; i++) {
         newStoreArr.push(i + 1)
       }
@@ -26,10 +25,11 @@ const Search = () => {
     let storeList = newStoreArr.toString()
     let fetchLink = `https://www.cheapshark.com/api/1.0/deals?metacritic=60&sortBy=recent`
     console.log(stores)
+    console.log('Title: ' + title, 'lowerPrice: ' + lowerPrice, 'discount: ' + discount, 'stores: ' + storeList, 'review: ' + review)
     if (lowerPrice !== null) {
-      fetchLink = fetchLink.concat(`&lowerPrice=${lowerPrice}`)
+      fetchLink = fetchLink.concat(`&upperPrice=${lowerPrice}`)
     }
-    if (stores !== null) {
+    if (newStoreArr.length > 0) {
       fetchLink = fetchLink.concat(`&storeID=${storeList}`)
     }
     if (review !== null) {
@@ -38,7 +38,7 @@ const Search = () => {
     if (title.length > 0) {
       fetchLink = fetchLink.concat(`&title=${title}`)
     }
-    console.log(fetchLink)
+    console.log('Fetch link: ' + fetchLink)
     axios.get(fetchLink).then(response => {
       setAllDeals(response.data)
       let newArr = []
@@ -59,7 +59,7 @@ const Search = () => {
           newArr.push(response.data[i])
         }
       }
-
+      setAllDeals(newArr)
       if (discount !== null) {
         let dealArr = []
         for (let i = 0; i < allDeals.length; i++) {
@@ -71,7 +71,6 @@ const Search = () => {
         setAllDeals(dealArr)
       } else {
         console.log(newArr)
-        setAllDeals(newArr)
       }
     })
   }
