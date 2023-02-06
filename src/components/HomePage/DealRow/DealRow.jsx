@@ -31,7 +31,6 @@ const DealRow = ({ cheapSharkUrl }) => {
       newArr = newArr.splice(0, 5)
 
       setAllDeals(newArr)
-      console.log(newArr)
     })
   }, [])
 

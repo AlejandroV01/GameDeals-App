@@ -17,7 +17,7 @@ const Search = () => {
 
   const handleSearch = ({ title, lowerPrice, discount, stores, review }) => {
     let newStoreArr = []
-    if (stores !== null || stores.length !== 0) {
+    if (stores !== null && stores.length !== 0) {
       for (let i = 0; i < stores.length; i++) {
         newStoreArr.push(i + 1)
       }
