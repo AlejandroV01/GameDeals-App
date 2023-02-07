@@ -1,6 +1,21 @@
 import React from 'react'
 import styles from './FilteredDeals.module.css'
 const FilteredDeals = ({ allDeals }) => {
+  const NoCardsFound = () => {
+    if (allDeals) {
+      if (allDeals.length === 0) {
+        return (
+          <div className={styles.noCard}>
+            <h3>No Deals Found</h3>
+            <p>Try Lowering Your Search Criteria</p>
+          </div>
+        )
+      } else {
+        return <></>
+      }
+    } else {
+    }
+  }
   return (
     <div className={styles.allCards}>
       {allDeals &&
@@ -37,6 +52,7 @@ const FilteredDeals = ({ allDeals }) => {
             </div>
           </div>
         ))}
+      <NoCardsFound></NoCardsFound>
     </div>
   )
 }

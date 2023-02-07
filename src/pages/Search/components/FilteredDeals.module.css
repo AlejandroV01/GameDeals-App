@@ -78,3 +78,22 @@
 .normalDeal {
   color: #ffffff;
 }
+
+.noCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #44435a;
+  height: 100px;
+  transition: 0.75s ease-out;
+}
+.noCard p {
+  color: white;
+  font-size: 18px;
+}
+.noCard:hover {
+  background-color: #616183;
+  transition: 0.75s ease-out;
+}

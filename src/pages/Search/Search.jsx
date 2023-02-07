@@ -21,7 +21,7 @@ const Search = () => {
     let newStoreArr = []
     if (stores !== null && stores.length !== 0) {
       for (let i = 0; i < stores.length; i++) {
-        newStoreArr.push(i + 1)
+        newStoreArr.push(stores[i] + 1)
       }
     }
     let storeList = newStoreArr.toString()
@@ -79,10 +79,10 @@ const Search = () => {
       if (sortTitle === 'Highest Price') {
         newArr.reverse()
       }
-      let newerArr = newArr
+      let newerArr = []
       for (let i = 0; i < newArr.length; i++) {
-        if (newArr[i].dealRating < slideDealRating) {
-          newerArr.push(i)
+        if (newArr[i].dealRating >= slideDealRating) {
+          newerArr.push(newArr[i])
         }
       }
       setAllDeals(newerArr)
@@ -93,11 +93,9 @@ const Search = () => {
             dealArr.push(allDeals[i])
           }
         }
-        console.log(dealArr)
         setAllDeals(dealArr)
-      } else {
-        console.log(newerArr)
       }
+      console.log(allDeals)
     })
   }
 
