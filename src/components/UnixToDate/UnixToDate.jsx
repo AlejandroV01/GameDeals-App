@@ -13,7 +13,7 @@ const UnixToDate = ({ unix }) => {
   const minutes = Math.floor(hoursMs / (60 * 1000))
   const minutesMs = ms % (60 * 1000)
   const sec = Math.floor(minutesMs / 1000)
-  console.log(days, hours, minutes, sec)
+
   if (days > 0) {
     return <>{days}d ago</>
   }

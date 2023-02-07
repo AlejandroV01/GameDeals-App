@@ -86,6 +86,7 @@ const Search = () => {
         }
       }
       setAllDeals(newerArr)
+      console.log(discount)
       if (discount !== null) {
         let dealArr = []
         for (let i = 0; i < allDeals.length; i++) {
@@ -93,6 +94,7 @@ const Search = () => {
             dealArr.push(allDeals[i])
           }
         }
+        console.log(dealArr)
         setAllDeals(dealArr)
       }
       console.log(allDeals)
