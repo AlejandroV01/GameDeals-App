@@ -1,4 +1,5 @@
 import React from 'react'
+import UnixToDate from '../../../components/UnixToDate/UnixToDate'
 import styles from './FilteredDeals.module.css'
 const FilteredDeals = ({ allDeals }) => {
   const NoCardsFound = () => {
@@ -24,16 +25,20 @@ const FilteredDeals = ({ allDeals }) => {
             <a target='_blank' rel='noreferrer' href={`https://www.cheapshark.com/redirect?dealID=${deal.dealID}`} className={styles.moreA}>
               {}
             </a>
-            <img
-              className={styles.cardImage}
-              src={deal.steamAppID ? `https://cdn.akamai.steamstatic.com/steam/apps/${deal.steamAppID}/header.jpg` : `${deal.thumb}`}
-              alt=''
-            />
+            <div className={styles.imageParent}>
+              <img
+                className={styles.cardImage}
+                src={deal.steamAppID ? `https://cdn.akamai.steamstatic.com/steam/apps/${deal.steamAppID}/header.jpg` : `${deal.thumb}`}
+                alt=''
+              />
+            </div>
             <div className={styles.informationAndStoreDiv}>
               <div className={styles.informationSlot}>
                 <div>
                   <h3>{deal.title}</h3>
-                  <p className={styles.pColor}>58m ago</p>
+                  <p className={styles.pColor}>
+                    <UnixToDate unix={deal.lastChange}></UnixToDate>
+                  </p>
                 </div>
                 <div className={styles.priceSlot}>
                   <div>
