@@ -11,7 +11,9 @@ const DealRow = ({ cheapSharkUrl }) => {
     axios.get(cheapSharkUrl).then(response => {
       setAllDeals(response.data)
       let newArr = []
-
+      if (cheapSharkUrl === 'https://www.cheapshark.com/api/1.0/deals?pageSize=15&metacritic=60&steamRating=70') {
+        console.log(response.data)
+      }
       for (let i = 0; i < response.data.length; i++) {
         let isDup = false
         if (newArr.length > 0) {
@@ -33,7 +35,6 @@ const DealRow = ({ cheapSharkUrl }) => {
       setAllDeals(newArr)
     })
   }, [])
-
   return (
     <div className={styles.dealRow}>
       {allDeals &&
