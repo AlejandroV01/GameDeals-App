@@ -1,7 +1,7 @@
 import axios from 'axios'
 import TooltipSlider from 'rc-slider'
 import 'rc-slider/assets/index.css'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { AiOutlineFire } from 'react-icons/ai'
 import { Dropdown } from 'rsuite'
 import SideNav from '../../components/SideNav/SideNav'
@@ -9,6 +9,30 @@ import FilterBar from './components/FilterBar'
 import FilteredDeals from './components/FilteredDeals'
 import styles from './Search.module.css'
 const Search = () => {
+  useEffect(() => {
+    axios.get(`https://www.cheapshark.com/api/1.0/deals?metacritic=60`).then(response => {
+      setAllDeals(response.data)
+      let newArr = []
+
+      for (let i = 0; i < response.data.length; i++) {
+        let isDup = false
+        if (newArr.length > 0) {
+          for (let j = 0; j < newArr.length; j++) {
+            if (response.data[i].internalName === newArr[j].internalName) {
+              isDup = true
+              break
+            }
+          }
+          if (isDup === false) {
+            newArr.push(response.data[i])
+          }
+        } else {
+          newArr.push(response.data[i])
+        }
+      }
+      setAllDeals(newArr)
+    })
+  }, [])
   const [sortTitle, setSortTitle] = useState('Lowest Price')
   const handleSelect = newVal => {
     setSortTitle(newVal)
@@ -55,7 +79,7 @@ const Search = () => {
         fetchLink = fetchLink.concat(`&sortBy=${sortTitle}`)
       }
     }
-    console.log('Fetch link: ' + fetchLink)
+
     axios.get(fetchLink).then(response => {
       setAllDeals(response.data)
       let newArr = []
