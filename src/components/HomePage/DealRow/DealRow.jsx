@@ -34,46 +34,62 @@ const DealRow = ({ cheapSharkUrl }) => {
 
       setAllDeals(newArr)
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  const loaderGames = () => {
-    // let htmlObject = document.createElement('div')
-    // for (let i = 0; i < 4; i++) {
-    //   htmlObject.innerHTML += <h1>Hello</h1>
-    // }
-    // return htmlObject
+  const LoadGames = () => {
+    const elements = []
+    for (let i = 0; i < 5; i++) {
+      elements.push(
+        <div className={styles.card} key={i}>
+          <div className={styles.leftSide}></div>
+          <div className={styles.rightSide}>
+            <Stack>
+              <div className={styles.dealText}>
+                <span></span>
+              </div>
+              <div></div>
+              <div className={`${styles.dealText}`}></div>
+            </Stack>
+          </div>
+        </div>
+      )
+    }
+    return elements
   }
   return (
     <div className={styles.dealRow}>
-      {allDeals
-        ? allDeals.map((deal, index) => (
-            <div className={styles.card} key={index}>
-              <a target='_blank' rel='noreferrer' href={`https://www.cheapshark.com/redirect?dealID=${deal.dealID}`} className={styles.moreA}>
-                {}
-              </a>
-              <div className={styles.leftSide}>
-                <img
-                  className={styles.headerImage}
-                  src={deal.steamAppID ? `https://cdn.akamai.steamstatic.com/steam/apps/${deal.steamAppID}/header.jpg` : `${deal.thumb}`}
-                  alt='a game img'
-                />
-              </div>
-              <div className={styles.rightSide}>
-                <h4 className={styles.gameHeader}>{deal.title}</h4>
-                <Stack divider={<Divider vertical />}>
-                  <div className={styles.dealText}>
-                    <span>{Math.round(deal.savings)}% Off </span>
-                  </div>
-                  <div>
-                    <img className={styles.storeLogo} src={`https://www.cheapshark.com/img/stores/logos/${deal.storeID - 1}.png`} alt='' />
-                  </div>
-                  <div className={`${deal.savings > 65 ? styles.goodDeal : styles.normalDeal} ${styles.dealText}`}>
-                    {deal.salePrice > 0 ? <span>${deal.salePrice}</span> : <span>FREE</span>}
-                  </div>
-                </Stack>
-              </div>
+      {allDeals ? (
+        allDeals.map((deal, index) => (
+          <div className={styles.card} key={index}>
+            <a target='_blank' rel='noreferrer' href={`https://www.cheapshark.com/redirect?dealID=${deal.dealID}`} className={styles.moreA}>
+              {}
+            </a>
+            <div className={styles.leftSide}>
+              <img
+                className={styles.headerImage}
+                src={deal.steamAppID ? `https://cdn.akamai.steamstatic.com/steam/apps/${deal.steamAppID}/header.jpg` : `${deal.thumb}`}
+                alt='a game img'
+              />
             </div>
-          ))
-        : loaderGames()}
+            <div className={styles.rightSide}>
+              <h4 className={styles.gameHeader}>{deal.title}</h4>
+              <Stack divider={<Divider vertical />}>
+                <div className={styles.dealText}>
+                  <span>{Math.round(deal.savings)}% Off </span>
+                </div>
+                <div>
+                  <img className={styles.storeLogo} src={`https://www.cheapshark.com/img/stores/logos/${deal.storeID - 1}.png`} alt='' />
+                </div>
+                <div className={`${deal.savings > 65 ? styles.goodDeal : styles.normalDeal} ${styles.dealText}`}>
+                  {deal.salePrice > 0 ? <span>${deal.salePrice}</span> : <span>FREE</span>}
+                </div>
+              </Stack>
+            </div>
+          </div>
+        ))
+      ) : (
+        <LoadGames></LoadGames>
+      )}
       <div className={`${styles.card} ${styles.moreCard}`}>
         <Link to='/search' className={styles.moreA}></Link>
         <div className={styles.moreDiv}>
