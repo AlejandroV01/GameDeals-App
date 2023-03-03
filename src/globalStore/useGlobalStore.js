@@ -1,8 +1,8 @@
 import { create } from 'zustand'
 
 const useGlobalStore = create(set => ({
-  title: 'Lowest Price',
-  changeTitle: () => set(state => ({ bears: state })),
+  sortTitle: 'Lowest Price',
+  changeTitle: newTitle => set(() => ({ sortTitle: newTitle })),
 }))
 
 export default useGlobalStore

@@ -5,12 +5,20 @@ import React, { useEffect, useState } from 'react'
 import { AiOutlineFire } from 'react-icons/ai'
 import { Dropdown } from 'rsuite'
 import SideNav from '../../components/SideNav/SideNav'
+import useGlobalStore from '../../globalStore/useGlobalStore'
 import FilterBar from './components/FilterBar'
 import FilteredDeals from './components/FilteredDeals'
 import styles from './Search.module.css'
 const Search = () => {
+  const [sortTitle, changeTitle] = useGlobalStore(state => [state.sortTitle, state.changeTitle])
+
   useEffect(() => {
-    axios.get(`https://www.cheapshark.com/api/1.0/deals?metacritic=60`).then(response => {
+    let fetchLink = `https://www.cheapshark.com/api/1.0/deals?metacritic=60&sortBy=${sortTitle}`
+    if (sortTitle === 'Lowest Price') {
+      fetchLink = `https://www.cheapshark.com/api/1.0/deals?metacritic=60&sortBy=price`
+    }
+    console.log(fetchLink)
+    axios.get(fetchLink).then(response => {
       setAllDeals(response.data)
       let newArr = []
 
@@ -33,10 +41,7 @@ const Search = () => {
       setAllDeals(newArr)
     })
   }, [])
-  const [sortTitle, setSortTitle] = useState('Lowest Price')
-  const handleSelect = newVal => {
-    setSortTitle(newVal)
-  }
+
   const [allDeals, setAllDeals] = useState(null)
   const [slideRating, setSlideRating] = useState(5)
 
@@ -73,14 +78,14 @@ const Search = () => {
     if (title.length > 0) {
       fetchLink = fetchLink.concat(`&title=${title}`)
     }
-    if (sortTitle.length !== null) {
+    if (sortTitle !== undefined) {
       if (sortTitle === 'Highest Price' || sortTitle === 'Lowest Price') {
         fetchLink = fetchLink.concat(`&sortBy=Price`)
       } else {
         fetchLink = fetchLink.concat(`&sortBy=${sortTitle}`)
       }
     }
-
+    console.log(fetchLink)
     axios.get(fetchLink).then(response => {
       setAllDeals(response.data)
       let newArr = []
@@ -111,7 +116,7 @@ const Search = () => {
         }
       }
       setAllDeals(newerArr)
-      console.log(discount)
+
       if (discount !== null) {
         let dealArr = []
         for (let i = 0; i < allDeals.length; i++) {
@@ -119,13 +124,12 @@ const Search = () => {
             dealArr.push(allDeals[i])
           }
         }
-        console.log(dealArr)
+
         setAllDeals(dealArr)
       }
-      console.log(allDeals)
     })
   }
-
+  console.log(sortTitle)
   return (
     <div className={styles.container}>
       <SideNav></SideNav>
@@ -164,12 +168,12 @@ const Search = () => {
           <div className={styles.sortParent}>
             <span className={styles.whiteText}>Sort By: </span>
             <Dropdown title={sortTitle}>
-              <Dropdown.Item onSelect={() => handleSelect('Lowest Price')}>Lowest Price</Dropdown.Item>
-              <Dropdown.Item onSelect={() => handleSelect('Highest Price')}>Highest Price</Dropdown.Item>
-              <Dropdown.Item onSelect={() => handleSelect('Savings')}>Savings</Dropdown.Item>
-              <Dropdown.Item onSelect={() => handleSelect('Deal Rating')}>Deal Rating</Dropdown.Item>
-              <Dropdown.Item onSelect={() => handleSelect('Recent')}>Recent</Dropdown.Item>
-              <Dropdown.Item onSelect={() => handleSelect('Metacritic')}>Metacritic</Dropdown.Item>
+              <Dropdown.Item onSelect={() => changeTitle('Lowest Price')}>Lowest Price</Dropdown.Item>
+              <Dropdown.Item onSelect={() => changeTitle('Highest Price')}>Highest Price</Dropdown.Item>
+              <Dropdown.Item onSelect={() => changeTitle('Savings')}>Savings</Dropdown.Item>
+              <Dropdown.Item onSelect={() => changeTitle('Deal Rating')}>Deal Rating</Dropdown.Item>
+              <Dropdown.Item onSelect={() => changeTitle('Recent')}>Recent</Dropdown.Item>
+              <Dropdown.Item onSelect={() => changeTitle('Metacritic')}>Metacritic</Dropdown.Item>
             </Dropdown>
           </div>
         </div>

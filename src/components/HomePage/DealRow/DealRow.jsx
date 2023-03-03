@@ -6,8 +6,10 @@ import { Divider, Stack } from 'rsuite'
 import useGlobalStore from '../../../globalStore/useGlobalStore'
 import styles from './DealRow.module.css'
 const DealRow = ({ cheapSharkUrl, dealFor }) => {
+  const changeTitle = useGlobalStore(state => state.changeTitle)
+
   const [allDeals, setAllDeals] = useState(null)
-  const { title, changeTitle } = useGlobalStore()
+
   useEffect(() => {
     axios.get(cheapSharkUrl).then(response => {
       setAllDeals(response.data)
@@ -57,6 +59,7 @@ const DealRow = ({ cheapSharkUrl, dealFor }) => {
     }
     return elements
   }
+
   return (
     <div className={styles.dealRow}>
       {allDeals ? (
@@ -94,7 +97,7 @@ const DealRow = ({ cheapSharkUrl, dealFor }) => {
       <div className={`${styles.card} ${styles.moreCard}`}>
         {dealFor === 'New' && <Link to='/search' onClick={() => changeTitle('Recent')} className={styles.moreA}></Link>}
         {dealFor === 'Best' && <Link to='/search' onClick={() => changeTitle('Deal Rating')} className={styles.moreA}></Link>}
-        {dealFor === 'Popular' && <Link to='/search' onClick={() => changeTitle('Recent')} className={styles.moreA}></Link>}
+        {dealFor === 'Popular' && <Link to='/search' className={styles.moreA}></Link>}
 
         <div className={styles.moreDiv}>
           <h4>Browse All Deals</h4>
