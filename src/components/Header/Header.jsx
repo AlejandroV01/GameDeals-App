@@ -6,18 +6,27 @@ const Header = () => {
     <div className={styles.content}>
       <div className={styles.container}>
         <h1>
-          <a href='https://google.com'>GameDeals</a>
+          <a href='/'>GameDeals</a>
         </h1>
-
-        <div className={styles.links}>
-          <a href='/'>Home</a>
-          <a href='/'>Home</a>
-        </div>
 
         <div className={styles.buttons}>
           <Stack direction='row' spacing={2}>
-            <Button variant='contained'>Get Started</Button>
-            <Button variant='contained'>Login</Button>
+            <Button
+              variant='contained'
+              onClick={() => {
+                alert('Feature Coming Soon!')
+              }}
+            >
+              Get Started
+            </Button>
+            <Button
+              variant='contained'
+              onClick={() => {
+                alert('Feature Coming Soon!')
+              }}
+            >
+              Login
+            </Button>
           </Stack>
         </div>
 

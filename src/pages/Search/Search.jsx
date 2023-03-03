@@ -39,6 +39,7 @@ const Search = () => {
   }
   const [allDeals, setAllDeals] = useState(null)
   const [slideRating, setSlideRating] = useState(5)
+
   const handleSearch = ({ title, lowerPrice, discount, stores, review }) => {
     let slideDealRating = Math.abs(slideRating - 10)
 
@@ -146,7 +147,7 @@ const Search = () => {
                     : styles.neutralDealSlider
                 }
               >
-                &ge;{Math.abs(slideRating - 10)}
+                {Math.abs(slideRating - 10)}
                 {Math.abs(slideRating - 10) >= 6 && <AiOutlineFire></AiOutlineFire>}
               </div>
               <TooltipSlider
@@ -165,10 +166,10 @@ const Search = () => {
             <Dropdown title={sortTitle}>
               <Dropdown.Item onSelect={() => handleSelect('Lowest Price')}>Lowest Price</Dropdown.Item>
               <Dropdown.Item onSelect={() => handleSelect('Highest Price')}>Highest Price</Dropdown.Item>
-              <Dropdown.Item onSelect={() => handleSelect('Savings')}>Discount</Dropdown.Item>
+              <Dropdown.Item onSelect={() => handleSelect('Savings')}>Savings</Dropdown.Item>
               <Dropdown.Item onSelect={() => handleSelect('Deal Rating')}>Deal Rating</Dropdown.Item>
-              <Dropdown.Item onSelect={() => handleSelect('Recent')}>Latest Deals</Dropdown.Item>
-              <Dropdown.Item onSelect={() => handleSelect('Metacritic')}>Metascore</Dropdown.Item>
+              <Dropdown.Item onSelect={() => handleSelect('Recent')}>Recent</Dropdown.Item>
+              <Dropdown.Item onSelect={() => handleSelect('Metacritic')}>Metacritic</Dropdown.Item>
             </Dropdown>
           </div>
         </div>

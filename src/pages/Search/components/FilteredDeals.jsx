@@ -1,5 +1,4 @@
 import React from 'react'
-import { Loader, Placeholder } from 'rsuite'
 import UnixToDate from '../../../components/UnixToDate/UnixToDate'
 import styles from './FilteredDeals.module.css'
 const FilteredDeals = ({ allDeals }) => {
@@ -20,7 +19,7 @@ const FilteredDeals = ({ allDeals }) => {
   }
   return (
     <div className={styles.allCards}>
-      {allDeals ? (
+      {allDeals &&
         allDeals.map((deal, index) => (
           <div className={styles.card} key={index}>
             <a target='_blank' rel='noreferrer' href={`https://www.cheapshark.com/redirect?dealID=${deal.dealID}`} className={styles.moreA}>
@@ -57,13 +56,7 @@ const FilteredDeals = ({ allDeals }) => {
               </div>
             </div>
           </div>
-        ))
-      ) : (
-        <>
-          <Placeholder.Paragraph rows={8} />
-          <Loader backdrop content='loading...' vertical />
-        </>
-      )}
+        ))}
       <NoCardsFound></NoCardsFound>
     </div>
   )
