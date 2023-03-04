@@ -40,6 +40,7 @@ const Search = () => {
       }
       setAllDeals(newArr)
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const [allDeals, setAllDeals] = useState(null)
