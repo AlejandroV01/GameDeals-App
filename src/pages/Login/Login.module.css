@@ -20,10 +20,12 @@
   background-color: #14121670;
 }
 .rightContainer {
+  position: relative;
   width: 70%;
 }
 
 .signTabs {
+  cursor: pointer;
   color: white;
   width: fit-content;
   padding: 10px 50px;
@@ -32,6 +34,51 @@
 .activeTab {
   border-bottom: 5px #00bcd4 solid;
 }
+.unActiveTab {
+  border-bottom: 1px #e5e5ea solid;
+}
 .tabSwitch {
   display: flex;
+  margin-bottom: 30px;
+}
+
+.wholeLoginContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.providerLogins {
+  display: flex;
+  width: 100%;
+  gap: 10px;
+}
+.brandButtons {
+  width: 100%;
+  color: white;
+}
+
+.google {
+  background-color: #db4437;
+}
+
+.apple {
+  background-color: black;
+}
+
+.microsoft {
+  background-color: #00a4ef;
+}
+
+.inputContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.actionButton{
+    width: 100%;
+    margin-top: 20px;
+    font-weight: bold;
 }

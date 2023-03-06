@@ -1,21 +1,39 @@
 import React from 'react'
-import { Button } from 'rsuite'
+import { AiOutlineLock, AiOutlineMail } from 'react-icons/ai'
+import { Button, Input, InputGroup } from 'rsuite'
 import styles from '../Login.module.css'
 const SignIn = () => {
-  return (
-    <div className={styles.signInContainer}>
-      <div className={styles.providerLogins}></div>
-      <p>OR USE EMAIL</p>
-      <div className={styles.inputContainer}>
-        <input type='text' />
-        <input type='text' />
-      </div>
-      <Button color='cyan' appearance='primary'>
-        Sign In
-      </Button>
-      <a href='https://google.com'>Forgot Password</a>
-    </div>
-  )
+    const handleSignIn = (e) => {
+        e.preventDefault()
+    }
+    return (
+        <div className={styles.signInContainer}>
+            <form className={styles.inputContainer} onSubmit={handleSignIn}>
+                <InputGroup style={styles}>
+                    <InputGroup.Addon>
+                        <AiOutlineMail size={18} />
+                    </InputGroup.Addon>
+                    <Input placeholder='Email' type='email' required />
+                </InputGroup>
+                <InputGroup style={styles}>
+                    <InputGroup.Addon>
+                        <AiOutlineLock size={18} />
+                    </InputGroup.Addon>
+                    <Input placeholder='Password' type='password' required />
+                </InputGroup>
+                <Button
+                    color='cyan'
+                    appearance='primary'
+                    className={styles.actionButton}
+                    type='submit'
+                >
+                    SIGN IN
+                </Button>
+            </form>
+
+            {/* <a href='https://google.com'>Forgot Password</a> */}
+        </div>
+    )
 }
 
 export default SignIn
