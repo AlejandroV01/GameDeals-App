@@ -163,6 +163,9 @@ const Search = () => {
                 defaultValue={5}
                 value={slideRating}
                 onChange={val => setSlideRating(val)}
+                railStyle={{ backgroundColor: '#00bcd4' }}
+                dotStyle={{ backgroundColor: '#00bcd4' }}
+                activeDotStyle={{ backgroundColor: '#00bcd4' }}
               />
             </div>
           </div>

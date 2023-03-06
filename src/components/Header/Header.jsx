@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { Button, Stack } from 'rsuite'
 import styles from './Header.module.css'
 const Header = () => {
@@ -10,17 +11,15 @@ const Header = () => {
         </h1>
 
         <div className={styles.buttons}>
-          <Stack direction='row' spacing={2}>
-            <Button
-              variant='contained'
-              onClick={() => {
-                alert('Feature Coming Soon!')
-              }}
-            >
+          <Stack direction='row' spacing={15}>
+            <Button as={Link} to='/login' color='cyan' appearance='ghost'>
               Get Started
             </Button>
             <Button
-              variant='contained'
+              as={Link}
+              to='/login'
+              color='cyan'
+              appearance='primary'
               onClick={() => {
                 alert('Feature Coming Soon!')
               }}

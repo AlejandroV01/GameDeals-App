@@ -156,6 +156,7 @@ const FilterBar = ({ handleSearch }) => {
       <TagPicker data={storeData} style={{ width: 175 }} placeholder='Stores' onChange={value => handleStoreChange(value)} />
       <InputPicker data={reviewData} style={{ width: 175 }} placeholder='Review' onChange={value => handleReviewChange(value)} />
       <Button
+        color='cyan'
         appearance='primary'
         onClick={() => {
           handleSearch({ title, lowerPrice, discount, stores, review })
