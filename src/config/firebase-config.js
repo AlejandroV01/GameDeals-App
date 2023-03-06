@@ -7,14 +7,15 @@ import { getAuth } from 'firebase/auth'
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const keys = process.env
 const firebaseConfig = {
-    apiKey: 'AIzaSyBVyPHyFC4bs7vbzca7lwxsWS4iwxdPS2g',
+    apiKey: `${keys.REACT_APP_FIREBASE_API}`,
     authDomain: 'gamedeal-app.firebaseapp.com',
     projectId: 'gamedeal-app',
     storageBucket: 'gamedeal-app.appspot.com',
-    messagingSenderId: '620686706388',
-    appId: '1:620686706388:web:3bc48479ccb0aad62add41',
-    measurementId: 'G-PZ22SP78CW',
+    messagingSenderId: `${keys.REACT_APP_FIREBASE_MESSAGING_SENDER_ID}`,
+    appId: `${keys.REACT_APP_FIREBASE_APP_ID}`,
+    measurementId: `${keys.REACT_APP_FIREBASE_MEASUREMENT_ID}`,
 }
 
 // Initialize Firebase

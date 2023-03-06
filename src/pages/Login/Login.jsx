@@ -1,17 +1,59 @@
+import {
+    FacebookAuthProvider,
+    getAuth,
+    GoogleAuthProvider,
+    signInWithPopup,
+    TwitterAuthProvider,
+} from 'firebase/auth'
 import firebase from 'firebase/compat/app'
 import 'firebase/compat/auth'
 import React, { useState } from 'react'
-import { BsApple, BsGoogle, BsMicrosoft } from 'react-icons/bs'
+import { BsFacebook, BsGoogle, BsTwitter } from 'react-icons/bs'
 import { Button, Divider, IconButton, Stack } from 'rsuite'
+import useGlobalStore from '../../globalStore/useGlobalStore'
 import SignIn from './components/SignIn'
 import SignUp from './components/SignUp'
 import styles from './Login.module.css'
 const Login = () => {
-    const loginWithGoogle = () => {
-        firebase
-            .auth()
-            .signInWithPopup(new firebase.auth.GoogleAuthProvider())
-            .then((userCred) => console.log(userCred))
+    const [isSignedIn, changeIsSignedIn] = useGlobalStore((state) => [
+        state.isSignedIn,
+        state.changeIsSignedIn,
+    ])
+    const googleProvider = new GoogleAuthProvider()
+    const twitterProvider = new TwitterAuthProvider()
+    const facebookProvider = new FacebookAuthProvider()
+    const auth = getAuth()
+    const [signInError, setSignInError] = useState(false)
+    const loginWithProvider = (provider) => {
+        signInWithPopup(auth, provider)
+            .then((result) => {
+                let credential
+                if ((provider = googleProvider)) {
+                    credential = GoogleAuthProvider.credentialFromResult(result)
+                } else if ((provider = twitterProvider)) {
+                    credential =
+                        TwitterAuthProvider.credentialFromResult(result)
+                } else {
+                    credential =
+                        FacebookAuthProvider.credentialFromResult(result)
+                }
+
+                const token = credential.accessToken
+                const user = result.user
+                console.log(token, user)
+                changeIsSignedIn(true)
+            })
+            .catch((error) => {
+                // Handle Errors here.
+                const errorCode = error.code
+                const errorMessage = error.message
+                // The email of the user's account used.
+                const email = error.customData.email
+                // The AuthCredential type that was used.
+                const credential = GoogleAuthProvider.credentialFromError(error)
+                setSignInError(true)
+                console.log(errorCode, errorMessage, email, credential)
+            })
     }
     const [isSignIn, setIsSignIn] = useState(true)
     return (
@@ -45,15 +87,17 @@ const Login = () => {
                         <IconButton
                             icon={<BsGoogle />}
                             className={`${styles.brandButtons} ${styles.google}`}
-                            onClick={loginWithGoogle}
+                            onClick={() => loginWithProvider(googleProvider)}
                         />
                         <IconButton
-                            icon={<BsApple />}
-                            className={`${styles.brandButtons} ${styles.apple}`}
+                            icon={<BsTwitter />}
+                            className={`${styles.brandButtons} ${styles.twitter}`}
+                            onClick={() => loginWithProvider(twitterProvider)}
                         />
                         <IconButton
-                            icon={<BsMicrosoft />}
-                            className={`${styles.brandButtons} ${styles.microsoft}`}
+                            icon={<BsFacebook />}
+                            className={`${styles.brandButtons} ${styles.facebook}`}
+                            onClick={() => loginWithProvider(facebookProvider)}
                         />
                     </div>
                     <Divider style={{ color: 'white' }}>OR USE EMAIL</Divider>
