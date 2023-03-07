@@ -5,6 +5,8 @@ const useGlobalStore = create((set) => ({
     changeTitle: (newTitle) => set(() => ({ sortTitle: newTitle })),
     isSignedIn: false,
     changeIsSignedIn: (bool) => set(() => ({ isSignedIn: bool })),
+    accountInfo: {},
+    changeAccountInfo: (account) => set(() => ({ accountInfo: account })),
 }))
 
 export default useGlobalStore

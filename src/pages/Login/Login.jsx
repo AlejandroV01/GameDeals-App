@@ -15,10 +15,13 @@ import SignIn from './components/SignIn'
 import SignUp from './components/SignUp'
 import styles from './Login.module.css'
 const Login = () => {
-    const [isSignedIn, changeIsSignedIn] = useGlobalStore((state) => [
-        state.isSignedIn,
-        state.changeIsSignedIn,
-    ])
+    const [isSignedIn, changeIsSignedIn, accountInfo, changeAccountInfo] =
+        useGlobalStore((state) => [
+            state.isSignedIn,
+            state.changeIsSignedIn,
+            state.accountInfo,
+            state.changeAccountInfo,
+        ])
     const googleProvider = new GoogleAuthProvider()
     const twitterProvider = new TwitterAuthProvider()
     const facebookProvider = new FacebookAuthProvider()
@@ -40,6 +43,7 @@ const Login = () => {
 
                 const token = credential.accessToken
                 const user = result.user
+                changeAccountInfo(user)
                 console.log(token, user)
                 changeIsSignedIn(true)
             })

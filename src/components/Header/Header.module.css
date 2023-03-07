@@ -54,6 +54,12 @@
 .navMenu {
   display: none;
 }
+
+.buttonStack{
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
 @media (max-width: 600px) {
   .links {
     display: none;
