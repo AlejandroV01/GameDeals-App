@@ -5,11 +5,10 @@ import {
     signInWithPopup,
     TwitterAuthProvider,
 } from 'firebase/auth'
-import firebase from 'firebase/compat/app'
 import 'firebase/compat/auth'
 import React, { useState } from 'react'
 import { BsFacebook, BsGoogle, BsTwitter } from 'react-icons/bs'
-import { Button, Divider, IconButton, Stack } from 'rsuite'
+import { Divider, IconButton } from 'rsuite'
 import useGlobalStore from '../../globalStore/useGlobalStore'
 import SignIn from './components/SignIn'
 import SignUp from './components/SignUp'
@@ -96,7 +95,8 @@ const Login = () => {
                         <IconButton
                             icon={<BsTwitter />}
                             className={`${styles.brandButtons} ${styles.twitter}`}
-                            onClick={() => loginWithProvider(twitterProvider)}
+                            // onClick={() => loginWithProvider(twitterProvider)}
+                            onClick={() => alert('Feature coming soon!')}
                         />
                         <IconButton
                             icon={<BsFacebook />}
