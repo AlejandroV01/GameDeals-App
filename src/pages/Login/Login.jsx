@@ -14,7 +14,6 @@ import SignIn from './components/SignIn'
 import SignUp from './components/SignUp'
 import styles from './Login.module.css'
 const Login = () => {
-    console.log(process.env.REACT_APP_FIREBASE_API)
     const [isSignedIn, changeIsSignedIn, accountInfo, changeAccountInfo] =
         useGlobalStore((state) => [
             state.isSignedIn,
