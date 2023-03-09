@@ -8,6 +8,7 @@ import { getAuth } from 'firebase/auth'
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const keys = process.env
+console.log(keys.REACT_APP_FIREBASE_API)
 const firebaseConfig = {
     apiKey: `${keys.REACT_APP_FIREBASE_API}`,
     authDomain: 'gamedeal-app.firebaseapp.com',
