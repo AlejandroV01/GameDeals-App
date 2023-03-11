@@ -1,10 +1,45 @@
-import React from 'react'
+import { signInWithEmailAndPassword } from 'firebase/auth'
+import React, { useState } from 'react'
 import { AiOutlineLock, AiOutlineMail } from 'react-icons/ai'
+import { toast } from 'react-toastify'
 import { Button, Input, InputGroup } from 'rsuite'
+import { auth } from '../../../config/firebase-config'
+import useGlobalStore from '../../../globalStore/useGlobalStore'
 import styles from '../Login.module.css'
 const SignIn = () => {
+    const [changeIsSignedIn] = useGlobalStore((state) => [
+        state.changeIsSignedIn,
+    ])
+
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
+    const handleToast = (text) => {
+        toast.error(`${text}`, {
+            position: 'bottom-right',
+            theme: 'dark',
+        })
+    }
     const handleSignIn = (e) => {
         e.preventDefault()
+        signInWithEmailAndPassword(auth, email, password)
+            .then(() => {
+                changeIsSignedIn(true)
+                toast.success('Successfully Logged In!', {
+                    position: 'bottom-right',
+                    theme: 'dark',
+                })
+            })
+            .catch((error) => {
+                const errorCode = error.code
+                if (errorCode === 'auth/user-not-found') {
+                    handleToast('User Not Found, Try Again.')
+                } else if (errorCode === 'auth/wrong-password') {
+                    handleToast('Wrong Password, Try Again.')
+                } else {
+                    handleToast(`Error Logging In. ${errorCode}`)
+                }
+            })
     }
     return (
         <div className={styles.signInContainer}>
@@ -13,13 +48,25 @@ const SignIn = () => {
                     <InputGroup.Addon>
                         <AiOutlineMail size={18} />
                     </InputGroup.Addon>
-                    <Input placeholder='Email' type='email' required />
+                    <Input
+                        placeholder='Email'
+                        type='email'
+                        required
+                        value={email}
+                        onChange={(e) => setEmail(e)}
+                    />
                 </InputGroup>
                 <InputGroup style={styles}>
                     <InputGroup.Addon>
                         <AiOutlineLock size={18} />
                     </InputGroup.Addon>
-                    <Input placeholder='Password' type='password' required />
+                    <Input
+                        placeholder='Password'
+                        type='password'
+                        required
+                        value={password}
+                        onChange={(e) => setPassword(e)}
+                    />
                 </InputGroup>
                 <Button
                     color='cyan'

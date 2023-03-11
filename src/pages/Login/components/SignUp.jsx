@@ -1,15 +1,15 @@
-import { type } from '@testing-library/user-event/dist/type'
-import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth'
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
 import React, { useState } from 'react'
 import { AiOutlineLock, AiOutlineMail, AiOutlineUser } from 'react-icons/ai'
-import { toast, ToastContainer } from 'react-toastify'
+import { toast } from 'react-toastify'
 import { Button, Input, InputGroup } from 'rsuite'
 import { auth } from '../../../config/firebase-config'
 import useGlobalStore from '../../../globalStore/useGlobalStore'
 import styles from '../Login.module.css'
 const SignUp = () => {
-    const [changeAccountInfo] = useGlobalStore((state) => [
+    const [changeAccountInfo, accountInfo] = useGlobalStore((state) => [
         state.changeAccountInfo,
+        state.accountInfo,
     ])
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -19,8 +19,11 @@ const SignUp = () => {
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 const user = userCredential.user
-                console.log(user)
-                console.log('success sign up')
+                user.displayName = name
+                updateProfile(user, { displayName: name })
+
+                changeAccountInfo(user)
+
                 toast.success('Successfully Signed Up!', {
                     position: 'bottom-right',
                     theme: 'dark',
@@ -28,14 +31,12 @@ const SignUp = () => {
             })
             .catch((error) => {
                 const errorCode = error.code
-                toast.error('Error Signing Up.', {
+                toast.error(`Error Signing Up. ${errorCode}`, {
                     position: 'bottom-right',
                     theme: 'dark',
                 })
-                alert(errorCode)
             })
     }
-
     return (
         <div className={styles.signInContainer}>
             <form className={styles.inputContainer} onSubmit={handleSignUp}>
@@ -44,6 +45,7 @@ const SignUp = () => {
                         <AiOutlineMail size={18} />
                     </InputGroup.Addon>
                     <Input
+                        value={email}
                         placeholder='Email'
                         type='email'
                         onChange={(e) => setEmail(e)}
@@ -55,6 +57,7 @@ const SignUp = () => {
                         <AiOutlineUser size={18} />
                     </InputGroup.Addon>
                     <Input
+                        value={name}
                         placeholder='Name'
                         onChange={(e) => setName(e)}
                         required
@@ -65,6 +68,7 @@ const SignUp = () => {
                         <AiOutlineLock size={18} />
                     </InputGroup.Addon>
                     <Input
+                        value={password}
                         placeholder='Password'
                         type='password'
                         onChange={(e) => setPassword(e)}
@@ -77,11 +81,9 @@ const SignUp = () => {
                     className={styles.actionButton}
                     type='submit'
                 >
-                    SIGN UP
+                    SIGN UP {accountInfo.displayName}
                 </Button>
             </form>
-
-            <ToastContainer />
         </div>
     )
 }

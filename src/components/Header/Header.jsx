@@ -19,12 +19,18 @@ const Header = () => {
                 <div className={styles.buttons}>
                     {isSignedIn ? (
                         <div className={styles.buttonStack}>
-                            <Avatar
-                                as={Link}
-                                to='/login'
-                                referrerPolicy='no-referrer'
-                                src={accountInfo.reloadUserInfo.photoUrl}
-                            />
+                            {accountInfo.reloadUserInfo.photoUrl ? (
+                                <Avatar
+                                    as={Link}
+                                    to='/login'
+                                    referrerPolicy='no-referrer'
+                                    src={accountInfo.reloadUserInfo.photoUrl}
+                                />
+                            ) : (
+                                <h1 as={Link} to='/login'>
+                                    {accountInfo.displayName}
+                                </h1>
+                            )}
                             <Button
                                 as={Link}
                                 to='/login'
