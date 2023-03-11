@@ -1,6 +1,8 @@
+import { type } from '@testing-library/user-event/dist/type'
 import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth'
 import React, { useState } from 'react'
 import { AiOutlineLock, AiOutlineMail, AiOutlineUser } from 'react-icons/ai'
+import { toast, ToastContainer } from 'react-toastify'
 import { Button, Input, InputGroup } from 'rsuite'
 import { auth } from '../../../config/firebase-config'
 import useGlobalStore from '../../../globalStore/useGlobalStore'
@@ -12,25 +14,31 @@ const SignUp = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [name, setName] = useState('')
-    const handleSignUp = () => {
+    const handleSignUp = (e) => {
+        e.preventDefault()
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 const user = userCredential.user
                 console.log(user)
                 console.log('success sign up')
+                toast.success('Successfully Signed Up!', {
+                    position: 'bottom-right',
+                    theme: 'dark',
+                })
             })
             .catch((error) => {
                 const errorCode = error.code
+                toast.error('Error Signing Up.', {
+                    position: 'bottom-right',
+                    theme: 'dark',
+                })
                 alert(errorCode)
             })
     }
 
     return (
         <div className={styles.signInContainer}>
-            <form
-                className={styles.inputContainer}
-                onSubmit={() => handleSignUp(auth)}
-            >
+            <form className={styles.inputContainer} onSubmit={handleSignUp}>
                 <InputGroup style={styles}>
                     <InputGroup.Addon>
                         <AiOutlineMail size={18} />
@@ -38,7 +46,7 @@ const SignUp = () => {
                     <Input
                         placeholder='Email'
                         type='email'
-                        onChange={(e) => setEmail(e.target.value)}
+                        onChange={(e) => setEmail(e)}
                         required
                     />
                 </InputGroup>
@@ -48,7 +56,7 @@ const SignUp = () => {
                     </InputGroup.Addon>
                     <Input
                         placeholder='Name'
-                        onChange={(e) => setName(e.target.value)}
+                        onChange={(e) => setName(e)}
                         required
                     />
                 </InputGroup>
@@ -59,7 +67,7 @@ const SignUp = () => {
                     <Input
                         placeholder='Password'
                         type='password'
-                        onChange={(e) => setPassword(e.target.value)}
+                        onChange={(e) => setPassword(e)}
                         required
                     />
                 </InputGroup>
@@ -73,7 +81,7 @@ const SignUp = () => {
                 </Button>
             </form>
 
-            {/* <a href='https://google.com'>Forgot Password</a> */}
+            <ToastContainer />
         </div>
     )
 }

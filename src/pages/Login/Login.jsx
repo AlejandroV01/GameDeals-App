@@ -1,43 +1,34 @@
 import {
-    FacebookAuthProvider,
     getAuth,
+    GithubAuthProvider,
     GoogleAuthProvider,
     signInWithPopup,
-    TwitterAuthProvider,
 } from 'firebase/auth'
 import 'firebase/compat/auth'
 import React, { useState } from 'react'
-import { BsFacebook, BsGoogle, BsTwitter } from 'react-icons/bs'
+import { BsGithub, BsGoogle } from 'react-icons/bs'
+import { toast, ToastContainer } from 'react-toastify'
 import { Divider, IconButton } from 'rsuite'
 import useGlobalStore from '../../globalStore/useGlobalStore'
 import SignIn from './components/SignIn'
 import SignUp from './components/SignUp'
 import styles from './Login.module.css'
 const Login = () => {
-    const [isSignedIn, changeIsSignedIn, accountInfo, changeAccountInfo] =
-        useGlobalStore((state) => [
-            state.isSignedIn,
-            state.changeIsSignedIn,
-            state.accountInfo,
-            state.changeAccountInfo,
-        ])
+    const [changeIsSignedIn, changeAccountInfo] = useGlobalStore((state) => [
+        state.changeIsSignedIn,
+        state.changeAccountInfo,
+    ])
     const googleProvider = new GoogleAuthProvider()
-    const twitterProvider = new TwitterAuthProvider()
-    const facebookProvider = new FacebookAuthProvider()
+    const githubProvider = new GithubAuthProvider()
     const auth = getAuth()
-    const [signInError, setSignInError] = useState(false)
     const loginWithProvider = (provider) => {
         signInWithPopup(auth, provider)
             .then((result) => {
                 let credential
                 if ((provider = googleProvider)) {
                     credential = GoogleAuthProvider.credentialFromResult(result)
-                } else if ((provider = twitterProvider)) {
-                    credential =
-                        TwitterAuthProvider.credentialFromResult(result)
                 } else {
-                    credential =
-                        FacebookAuthProvider.credentialFromResult(result)
+                    credential = GithubAuthProvider.credentialFromResult(result)
                 }
 
                 const token = credential.accessToken
@@ -45,6 +36,10 @@ const Login = () => {
                 changeAccountInfo(user)
                 console.log(token, user)
                 changeIsSignedIn(true)
+                toast.success('Login Success!', {
+                    position: 'bottom-right',
+                    theme: 'dark',
+                })
             })
             .catch((error) => {
                 // Handle Errors here.
@@ -54,7 +49,10 @@ const Login = () => {
                 const email = error.customData.email
                 // The AuthCredential type that was used.
                 const credential = GoogleAuthProvider.credentialFromError(error)
-                setSignInError(true)
+                toast.error('Login Error, Try Again.', {
+                    position: 'bottom-right',
+                    theme: 'dark',
+                })
                 console.log(errorCode, errorMessage, email, credential)
             })
     }
@@ -93,15 +91,9 @@ const Login = () => {
                             onClick={() => loginWithProvider(googleProvider)}
                         />
                         <IconButton
-                            icon={<BsTwitter />}
-                            className={`${styles.brandButtons} ${styles.twitter}`}
-                            // onClick={() => loginWithProvider(twitterProvider)}
-                            onClick={() => alert('Feature coming soon!')}
-                        />
-                        <IconButton
-                            icon={<BsFacebook />}
-                            className={`${styles.brandButtons} ${styles.facebook}`}
-                            onClick={() => loginWithProvider(facebookProvider)}
+                            icon={<BsGithub />}
+                            className={`${styles.brandButtons} ${styles.github}`}
+                            onClick={() => loginWithProvider(githubProvider)}
                         />
                     </div>
                     <Divider style={{ color: 'white' }}>OR USE EMAIL</Divider>
@@ -110,6 +102,7 @@ const Login = () => {
                     </div>
                 </div>
             </div>
+            <ToastContainer />
         </div>
     )
 }
