@@ -1,13 +1,15 @@
 import {
+    browserSessionPersistence,
     getAuth,
     GithubAuthProvider,
     GoogleAuthProvider,
+    setPersistence,
     signInWithPopup,
 } from 'firebase/auth'
 import 'firebase/compat/auth'
 import React, { useState } from 'react'
 import { BsGithub, BsGoogle } from 'react-icons/bs'
-import { toast, ToastContainer } from 'react-toastify'
+import { toast } from 'react-toastify'
 import { Divider, IconButton } from 'rsuite'
 import useGlobalStore from '../../globalStore/useGlobalStore'
 import SignIn from './components/SignIn'
@@ -22,38 +24,48 @@ const Login = () => {
     const githubProvider = new GithubAuthProvider()
     const auth = getAuth()
     const loginWithProvider = (provider) => {
-        signInWithPopup(auth, provider)
-            .then((result) => {
-                let credential
-                if ((provider = googleProvider)) {
-                    credential = GoogleAuthProvider.credentialFromResult(result)
-                } else {
-                    credential = GithubAuthProvider.credentialFromResult(result)
-                }
+        setPersistence(auth, browserSessionPersistence)
+            .then(() => {
+                signInWithPopup(auth, provider)
+                    .then((result) => {
+                        let credential
+                        if ((provider = googleProvider)) {
+                            credential =
+                                GoogleAuthProvider.credentialFromResult(result)
+                        } else {
+                            credential =
+                                GithubAuthProvider.credentialFromResult(result)
+                        }
 
-                const token = credential.accessToken
-                const user = result.user
-                changeAccountInfo(user)
-                console.log(token, user)
-                changeIsSignedIn(true)
-                toast.success('Login Success!', {
-                    position: 'bottom-right',
-                    theme: 'dark',
-                })
+                        const token = credential.accessToken
+                        const user = result.user
+                        changeAccountInfo(user)
+                        console.log(token, user)
+                        toast.success('Login Success!', {
+                            position: 'bottom-right',
+                            theme: 'dark',
+                        })
+                        changeIsSignedIn(true)
+                    })
+                    .catch((error) => {
+                        // Handle Errors here.
+                        const errorCode = error.code
+                        const errorMessage = error.message
+                        // The email of the user's account used.
+                        const email = error.customData.email
+                        // The AuthCredential type that was used.
+                        const credential =
+                            GoogleAuthProvider.credentialFromError(error)
+                        toast.error('Login Error, Try Again.', {
+                            position: 'bottom-right',
+                            theme: 'dark',
+                        })
+                        console.log(errorCode, errorMessage, email, credential)
+                    })
             })
             .catch((error) => {
-                // Handle Errors here.
-                const errorCode = error.code
-                const errorMessage = error.message
-                // The email of the user's account used.
-                const email = error.customData.email
-                // The AuthCredential type that was used.
-                const credential = GoogleAuthProvider.credentialFromError(error)
-                toast.error('Login Error, Try Again.', {
-                    position: 'bottom-right',
-                    theme: 'dark',
-                })
-                console.log(errorCode, errorMessage, email, credential)
+                toast.error('error on persistence')
+                console.log(error)
             })
     }
     const [isSignIn, setIsSignIn] = useState(true)
@@ -102,7 +114,6 @@ const Login = () => {
                     </div>
                 </div>
             </div>
-            <ToastContainer />
         </div>
     )
 }
