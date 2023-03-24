@@ -80,21 +80,12 @@
 .card {
   transition: background 0.75s ease-out;
 }
-.discount {
-  font-size: 1.2rem;
-}
-
-.progress {
-  width: 50px;
-  color: white;
-  display: 'inline-block';
-}
 
 .storeLogo {
   width: 40px;
 }
 .dealText {
-  font-size: 1.4rem;
+  font-size: 1.3rem;
 }
 .goodDeal {
   color: #07da74;
