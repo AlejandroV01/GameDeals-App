@@ -51,6 +51,7 @@ const SignIn = () => {
                     })
             })
             .catch((error) => {
+                console.log('persist fail')
                 toast.error('error on persistence')
                 console.log(error)
             })
